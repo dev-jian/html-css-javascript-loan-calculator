@@ -5,12 +5,20 @@ function calculateResults(e) {
   console.log("Calculating...");
 
   // UI Vars
+  const results = document.querySelector("#results");
+  const loading = document.querySelector("#loading");
   const amount = document.querySelector("#amount");
   const interest = document.querySelector("#interest");
   const years = document.querySelector("#years");
   const monthlyPayment = document.querySelector("#monthly-payment");
   const totalPayment = document.querySelector("#total-payment");
   const totalInterest = document.querySelector("#total-interest");
+
+  // Hide results
+  results.style.display = "none";
+
+  // Show loader
+  loading.style.display = "block";
 
   const principal = parseFloat(amount.value); 
   const calculatedInterest = parseFloat(interest.value) / 100 / 12;
@@ -24,10 +32,20 @@ function calculateResults(e) {
     monthlyPayment.value = monthly.toFixed(2);
     totalPayment.value = (monthly * calculatedPayments).toFixed(2);
     totalInterest.value = ((monthly * calculatedPayments) - principal).toFixed(2);
+
+    setTimeout(() => {
+      loading.style.display = "none";
+      results.style.display = "block";
+    }, 2000);
   } else {
-    showError("Please check your numbers");
+    setTimeout(() => {
+      loading.style.display = "none";
+      showError("Please check your numbers");
+    }, 2000);
   }
 
+  
+  
   e.preventDefault();
 }
 
